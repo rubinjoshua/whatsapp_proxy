@@ -2,9 +2,11 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 
 const captureQR = async () => {
+    
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: puppeteer.executablePath(),  // <-- force the correct binary
   });
 
   const page = await browser.newPage();
