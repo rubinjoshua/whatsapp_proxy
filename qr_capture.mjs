@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 
+console.log('Executable path:', puppeteer.executablePath());
+
 const captureQR = async () => {
     
   const browser = await puppeteer.launch({
@@ -24,6 +26,9 @@ const captureQR = async () => {
   await page.waitForSelector('canvas[aria-label="Scan this QR code to link a device!"]', { timeout: 60000 });
 
   const qrElement = await page.$('canvas[aria-label="Scan this QR code to link a device!"]');
+  if (fs.existsSync('qr.png')) {
+    fs.unlinkSync('qr.png');
+  }
   await qrElement.screenshot({ path: 'qr.png' });
 
   console.log('QR code saved to qr.png');
